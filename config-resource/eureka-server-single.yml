@@ -27,4 +27,4 @@ eureka:
       evictionIntervalTimerInMs: 3000
 logging:
   level:
-    com.netflix: debug
+    com.netflix: info
