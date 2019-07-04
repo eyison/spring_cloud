@@ -27,4 +27,5 @@ eureka:
       evictionIntervalTimerInMs: 3000
 logging:
   level:
+    root: info
     com.netflix: info
