@@ -1,0 +1,56 @@
+server:
+  port: 5555
+
+spring:
+  application:
+    name: zuul-server
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+      file-size-threshold: 1MB
+      location: /
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+logging:
+  level:
+    com.netflix: info
+
+zuul:
+  retryable: true
+  routes:
+    zuul-gateway:
+      path: /feign-service-product/**
+      serviceId: feign-service-product
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 30000
+  eager-load:
+    enabled: true
+    clients: feign-service-product
+  okhttp:
+    enabled: true
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+  OkToRetryOnAllOperations: true

@@ -1,0 +1,19 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: mongo
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/springcloud
+
+
+
+
+
+

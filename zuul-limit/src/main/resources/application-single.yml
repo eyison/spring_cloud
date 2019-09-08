@@ -1,0 +1,47 @@
+server:
+  port: 5053
+
+spring:
+  application:
+    name: zuul-limit-server
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+logging:
+  level:
+    com.netflix: info
+
+zuul:
+  routes:
+    zuul-gateway:
+      path: /feign-service-product/**
+      serviceId: feign-service-product
+  ratelimit:
+    key-prefix: zuul-limit-prefix
+    enabled: true
+    repository: BUCKET4J_JCACHE
+    behind-proxy: true
+    add-response-headers: true
+    default-policy-list:
+      - limit: 1 #optional - request number limit per refresh interval window
+        quota: 1 #optional - request time limit per refresh interval window (in seconds)
+        refresh-interval: 60 #default value (in seconds)
+        type:
+          - url
+    policy-list:
+      feign-service-product:
+        - limit: 1 #optional - request number limit per refresh interval window
+          quota: 1 #optional - request time limit per refresh interval window (in seconds)
+          refresh-interval: 60 #default value (in seconds)
+          type:
+            - user

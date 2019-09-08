@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    config:
+      label: master
+      uri: http://localhost:8888
+      name: eureka-server
+      profile: single
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest

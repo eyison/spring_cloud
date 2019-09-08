@@ -1,0 +1,27 @@
+server:
+  port: 8021
+
+spring:
+  application:
+    name: nacos-dubbo-cloud-product-service
+  main:
+      allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+dubbo:
+  scan:
+    base-packages: com.eyison.service
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
+  registry:
+    address: spring-cloud://localhost
+
+feign:
+  hystrix:
+    enabled: true

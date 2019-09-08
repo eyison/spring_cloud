@@ -1,0 +1,28 @@
+server:
+  port: 5055
+
+spring:
+  application:
+    name: zuul-gray-server
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+logging:
+  level:
+    com.netflix: info
+
+zuul:
+  routes:
+    zuul-gateway:
+      path: /feign-service-product/**
+      serviceId: feign-service-product

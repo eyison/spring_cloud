@@ -1,0 +1,79 @@
+use springcloud;
+
+db.getCollection('eureka-server').insert(
+    {
+        "label": "master",
+        "profile": "single",
+        "source": {
+            "server": {
+                "port": "8761"
+            },
+            "spring": {
+                "application": {
+                    "name": "eureka-server"
+                },
+                "profiles": {
+                    "active": "single"
+                },
+                "jackson": {
+                    "serialization": {
+                        "FAIL_ON_EMPTY_BEANS": "false"
+                    }
+                }
+            },
+            "eureka": {
+                "instance": {
+                    "preferIpAddress": "true"
+                },
+                "client": {
+                    "registerWithEureka": "false",
+                    "fetchRegistry": "false",
+                    "serviceUrl": {
+                        "defaultZone": "http://localhost:8761/eureka/"
+                    }
+                },
+                "server": {
+                    "evictionIntervalTimerInMs": "3000"
+                }
+            }
+        }
+    }
+);
+
+db.getCollection('eureka-client').insert(
+    {
+        "label": "master",
+        "profile": "single",
+        "source": {
+            "server": {
+                "port": "8081"
+            },
+            "spring": {
+                "application": {
+                    "name": "eureka-client"
+                },
+                "profiles": {
+                    "active": "single"
+                }
+            },
+            "eureka": {
+                "instance": {
+                    "hostname": "localhost",
+                    "preferIpAddress": "true",
+                    "leaseExpirationDurationInSeconds": "10",
+                    "leaseRenewalIntervalInSeconds": "3"
+                },
+                "client": {
+                    "serviceUrl": {
+                        "defaultZone": "http://localhost:8761/eureka/"
+                    },
+                    "registerWithEureka": "true",
+                    "fetchRegistry": "true",
+                    "eurekaServerReadTimeoutSeconds": "10"
+                }
+            }
+        }
+    }
+);
+
+

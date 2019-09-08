@@ -1,0 +1,38 @@
+server:
+  port: 5056
+
+spring:
+  application:
+    name: zuul-swagger-server
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+      file-size-threshold: 1MB
+      location: /
+  resources:
+    static-locations: classpath:/META-INF/resources
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+logging:
+  level:
+    com.netflix: info
+
+zuul:
+  routes:
+    feign-service-product-R1: /feign-service-product-R1/**
+    feign-service-product-R2: /feign-service-product-R2/**
+
+

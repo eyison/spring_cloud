@@ -1,0 +1,15 @@
+server:
+  port: 8184
+
+spring:
+  application:
+    name: transaction-tcc-ts-application
+
+tcc:
+  coordinator:
+    url: http://localhost:8181/coordinator
+  transaction:
+    timeoutInMs: 30000
+  participant:
+    t1Service: http://localhost:8182/t1/tcc/%s
+    t2Service: http://localhost:8183/t2/tcc/%s

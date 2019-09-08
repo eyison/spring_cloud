@@ -1,0 +1,17 @@
+server:
+  port: 9094
+
+spring:
+  application:
+    name: transaction-sega-servicecomb-ts-application
+  main:
+    allow-bean-definition-overriding: true
+alpha:
+  cluster:
+    address: localhost:9090
+omega:
+  t1OkService: http://localhost:9092/t1/saveOK
+  t1FailService: http://localhost:9092/t1/saveFail
+  t2Service: http://localhost:9093/t2
+
+

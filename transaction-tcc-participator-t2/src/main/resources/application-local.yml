@@ -1,0 +1,11 @@
+server:
+  port: 8183
+
+spring:
+  application:
+    name: transaction-tcc-participator-t2
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+    username: root
+    password: 12345678

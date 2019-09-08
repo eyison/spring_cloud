@@ -1,0 +1,10 @@
+spring:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

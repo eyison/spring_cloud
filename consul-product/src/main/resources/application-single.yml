@@ -1,0 +1,13 @@
+server:
+  port: 8121
+
+spring:
+  application:
+    name: consul-product
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        serviceName: ${spring.application.name}
+        tags: tag1

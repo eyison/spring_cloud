@@ -1,0 +1,26 @@
+server:
+  port: 8184
+
+spring:
+  application:
+    name: feign-service-consumer-hystrix-exception
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      feign-service-product:
+        errorDecoder: com.eyison.config.FeignErrorDecoder

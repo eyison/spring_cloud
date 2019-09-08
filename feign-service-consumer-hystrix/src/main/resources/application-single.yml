@@ -1,0 +1,32 @@
+server:
+  port: 8183
+
+spring:
+  application:
+    name: feign-service-consumer-hystrix
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,hystrix.stream
+
+feign:
+  hystrix:
+    enabled: true
+
+turbine:
+  appConfig: feign-service-consumer-hystrix
+  clusterNameExpression: "'default'"

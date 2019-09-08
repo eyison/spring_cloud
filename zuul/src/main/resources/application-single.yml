@@ -1,0 +1,134 @@
+server:
+  port: 5555
+
+spring:
+  application:
+    name: zuul-server
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+      file-size-threshold: 1MB
+      location: /
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+logging:
+  level:
+    com.netflix: info
+
+#单实例serviceld映射
+zuul:
+  routes:
+    zuul-gateway:
+      path: /feign-service-product/**
+      serviceId: feign-service-product
+
+#单实例serviceld映射简化配置1
+#zuul:
+#  routes:
+#    feign-service-product: /feign-service-product/**
+
+#单实例serviceld映射简化配置2
+#zuul:
+#  routes:
+#    feign-service-product:
+
+#单实例url映射
+#zuul:
+#  routes:
+#    feign-service-product:
+#      path: /feign-service-product/**
+#      url: http://localhost:8022
+
+
+#脱离eureka让zuul结合ribbon实现路由负载均衡
+#zuul:
+#  routes:
+#    ribbon-route:
+#      path: /feign-service-product/**
+#      serviceId: ribbon-route
+#ribbon:
+#  eureka:
+#    enabled: false
+#ribbon-route:
+#  ribbon:
+#    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#    listOfServers: localhost:8021,localhost:8022
+
+#foward跳转本地url
+#zuul:
+#  routes:
+#    feign-service-product:
+#      path: /feign-service-product/**
+#      url: forward:/users
+
+# 映射覆盖
+# 在yml解释器工作的时候，如果同一个映射路径对应多个服务，按照加载顺序，最末加载的映射规则会把之前的映射规则覆盖掉
+#zuul:
+#  routes:
+#    feign-service-product:
+#      path: /service/**
+#      serviceId: feign-service-product
+#    feign-service-consumer:
+#      path: /service/**
+#      serviceId: feign-service-consumer
+
+#前缀及敏感头信息
+#zuul:
+#  prefix: /pre
+#  routes:
+#    feign-service-product:
+#      path: /service/**
+#      sensitiveHeaders: Cookie,Set-Cookie,Authorization
+#      serviceId: feign-service-product
+#      stripPrefix: true
+
+##服务忽略、路径忽略、重定向host问题
+#zuul:
+#  retryable: true #开启重试
+#  ignored-services: feign-service-product    #忽略的服务，防服务侵入
+##  ignored-patterns: /**/users/**  #忽略的接口，屏蔽接口
+#  prefix: /pre                  #前缀
+#  add-host-header: true         #重定向header问题
+#  routes:
+#    feign-service-consumer: /service/**
+
+##重试机制
+#zuul:
+#  retryable: true #开启重试
+#ribbon:
+#  MaxAutoRetries: 1 #同一个服务重试的次数(除去首次)
+#  MaxAutoRetriesNextServer: 1  #切换相同服务数量
+
+#禁用某个过滤器
+#zuul:
+#  SendErrorFilter:
+#    error:
+#      disable: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 30000
+  eager-load:
+    enabled: true
+    clients: feign-service-product

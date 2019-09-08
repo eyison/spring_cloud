@@ -1,0 +1,29 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: git
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  cloud:
+    config:
+      #### --> 本地参数的覆盖远程参数
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: false
+      #### -->
+      server:
+        git:
+          uri: https://github.com/eyison/spring_cloud.git
+          username:
+          password:
+          search-paths: config-resource
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

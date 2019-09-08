@@ -1,0 +1,32 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: git-placeholder-multi
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/eyison/spring_cloud.git
+          username:
+          password:
+          search-paths: config-resource
+          repos:
+            simple: https://github.com/eyison/spring_cloud.git
+            special:
+              pattern: '*cloud*/single*'
+              uri: https://github.com/eyison/spring_cloud.git
+            local:
+            pattern: 'server*'
+            uri: /work/workspace/spring_cloud/config-resource
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

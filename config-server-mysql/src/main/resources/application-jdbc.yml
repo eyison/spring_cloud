@@ -1,0 +1,35 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: jdbc
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  cloud:
+    config:
+      server:
+        jdbc:
+          sql: SELECT `KEY`, `VALUE` from PROPERTIES where APPLICATION=? and PROFILE=? and LABEL=?
+      label: master
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    baseline-on-migrate: true
+
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+    org.springframework.jdbc.core.StatementCreatorUtils: Trace
+
+
+
+
+
+
+

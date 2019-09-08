@@ -1,0 +1,27 @@
+server:
+  port: 8081
+  ssl:
+    enabled: false
+    key-store: classpath:cert/client.p12
+    key-store-password: torepasswd
+    key-store-type: PKCS12
+    key-alias: client
+spring:
+  application:
+    name: eureka-client
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: https://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+logging:
+  level:
+    com.netflix: debug

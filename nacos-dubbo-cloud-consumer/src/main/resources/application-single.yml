@@ -1,0 +1,26 @@
+server:
+  port: 8011
+
+spring:
+  application:
+    name: nacos-dubbo-cloud-consumer
+  main:
+      allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+dubbo:
+  application:
+    qos:
+      port: 33333
+  registry:
+    address: spring-cloud://localhost
+  cloud:
+    subscribed-services: nacos-dubbo-cloud-product-service
+
+logging:
+  level:
+    org.apache.dubbo: debug
+    com.netflix: debug

@@ -1,0 +1,60 @@
+server:
+  port: 8011
+
+spring:
+  application:
+    name: feign-service-consumer
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+feign:
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
+      github-zip-client:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
+        decode404: false
+  hystrix:
+    enabled: true
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+hystrix:
+  shareSecurityContext: true
+  command:
+    default:
+      circuitBreaker :
+        sleepWindowInMilliseconds: 100000
+        forceClosed: true
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 600000
+
+logging:
+  level:
+    com.netflix: debug

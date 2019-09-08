@@ -1,0 +1,11 @@
+server:
+  port: 8181
+spring:
+  application:
+    name: transaction-tcc-coordinator-atomikos
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

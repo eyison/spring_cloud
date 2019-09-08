@@ -1,0 +1,48 @@
+server:
+  port: 5203
+
+spring:
+  application:
+    name: zuul-oauth
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 3
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+    eurekaServerReadTimeoutSeconds: 10
+
+logging:
+  level:
+    com.netflix: info
+    org.springframework.security: debug
+
+zuul:
+  routes:
+    oauth-service-product:
+      path: /oauth-service-product/**
+      serviceId: oauth-service-product
+  add-proxy-headers: true
+  sensitiveHeaders: Cookie,Set-Cookie
+
+security:
+  oauth2:
+    client:
+      access-token-uri: http://localhost:7001/oauth/token #令牌端点
+      user-authorization-uri: http://localhost:7001/oauth/authorize #授权端点
+      client-id: zuul-oauth #OAuth2客户端ID
+      client-secret: uRLDOdQee7bRLjFx0 #OAuth2客户端密钥
+    resource:
+      token-info-uri: http://localhost:7001/oauth/check_token
+      user-info-uri: http://localhost:7001/auth/user
+      jwt:
+#        key-value: gW9OzdsB1MYOAPJ8 #使用对称加密方式，默认算法为HS256
+        key-uri: http://localhost:7001/oauth/token_key
+
+
+

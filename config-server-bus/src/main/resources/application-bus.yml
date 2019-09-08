@@ -1,0 +1,33 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: git
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/eyison/spring_cloud.git
+          username:
+          password:
+          search-paths: config-resource
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

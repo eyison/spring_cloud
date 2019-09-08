@@ -1,0 +1,23 @@
+server:
+  port: 9093
+
+alpha:
+  cluster:
+    address: localhost:9090
+
+spring:
+  application:
+    name: transaction-sega-servicecomb-omega-t2
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+    username: root
+    password: 12345678
+
+logging:
+  level:
+    root: info
+
+
