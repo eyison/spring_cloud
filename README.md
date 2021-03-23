@@ -17,7 +17,7 @@
 - 如果使用idea或eclipse启动需要手动指定 active profile
 - maven启动命令：`mvn spring-boot:run -Dspring.profiles.active={active profile}`
     
-#####文档说明
+##### 文档说明
    参数文档以及其他的说明文档都在目录`.document`中，按照组件归档。
    
 
